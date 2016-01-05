@@ -101,25 +101,38 @@
             });
         };
 
-        this.expandCommand = function(commandStr) {
+        this.expandCommand = function (commandStr, transform) {
             var allFiles = '';
-            var checkedFiles = m$.data.checked;
+            var checkedFiles, tmp2 = m$.data.checked;
             if (m$.data.pwd === undefined) {
                 m$.data.pwd = '/';
             }
-            if(/\$pwd/.test(commandStr)) {
+
+            if (transform) {
+                checkedFiles = [];
+            }
+            for (var i = 0; i < tmp2.length; i++) {
+                if (transform) {
+                    checkedFiles.push(tmp2[i].replace('//', '\\'));
+                }
+            }
+            if (!transform) {
+                checkedFiles = tmp2;
+            }
+
+            if (/\$pwd/.test(commandStr)) {
                 commandStr = commandStr.replace(/\$pwd/g, m$.data.pwd);
             }
-            if(/\$all/.test(commandStr)) {
+            if (/\$all/.test(commandStr)) {
                 if (checkedFiles && checkedFiles.length > 0) {
                     allFiles = '"' + checkedFiles.join('" "') + '"';
                 }
                 commandStr = commandStr.replace(/\$all/g, allFiles);
             }
             var tmp = "";
-            if(/\$each/.test(commandStr)) {
-                for(var i=0; i<checkedFiles.length; i++) {
-                    tmp = tmp + commandStr.replace(/\$each/g, '"'+checkedFiles[i]+'"') + ';';
+            if (/\$each/.test(commandStr)) {
+                for (i = 0; i < checkedFiles.length; i++) {
+                    tmp = tmp + commandStr.replace(/\$each/g, '"' + checkedFiles[i] + '"') + ';';
                 }
                 commandStr = tmp;
             }
@@ -127,10 +140,11 @@
         };
 
         this.executeCommand = function (viewName, commandStr) {
-            commandStr = this.expandCommand(commandStr);
             if (commandStr.indexOf('m-open') === 0) {
+                commandStr = this.expandCommand(commandStr, false);
                 this.listFolder('finder', commandStr.substring(commandStr.indexOf(' ')).trim());
             } else {
+                commandStr = this.expandCommand(commandStr, true);
                 console.log(commandStr);
                 $.ajax({
                     url: '/shell/',
@@ -188,13 +202,15 @@
             );
         };
 
-        this.addSortingControls = function(id) {
-            setTimeout(function(){$('#id'+id).jqmts({
-                useNativeMenu: false,
-                showCounts: false,
-                className: 'class'+id,
-                attributes: {name: 'Sort by Name', creation: 'Sort by Creation Time', size: 'Sort by Size'}
-            })}, 0);
+        this.addSortingControls = function (id) {
+            setTimeout(function () {
+                $('#id' + id).jqmts({
+                    useNativeMenu: false,
+                    showCounts: false,
+                    className: 'class' + id,
+                    attributes: {name: 'Sort by Name', creation: 'Sort by Creation Time', size: 'Sort by Size'}
+                })
+            }, 0);
         };
     }
 
