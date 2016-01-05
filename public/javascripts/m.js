@@ -113,7 +113,7 @@
             }
             for (var i = 0; i < tmp2.length; i++) {
                 if (transform) {
-                    checkedFiles.push(tmp2[i].replace('//', '\\'));
+                    checkedFiles.push(tmp2[i].replace(/\/\//g, '\\'));
                 }
             }
             if (!transform) {
