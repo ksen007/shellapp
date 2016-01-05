@@ -27,7 +27,7 @@
                     if (data.message === 'success') {
                         this.listRecords(modelName, viewName);
                     } else {
-                        console.error('Creation of ' + JSON.stringify(record) + ' failed! ' + data.error);
+                        console.error('Creation of ' + JSON.stringify(record) + ' failed! ' + JSON.stringify(data.error));
                     }
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -65,7 +65,7 @@
                     if (data.message === 'success') {
                         this.listRecords(modelName, viewName);
                     } else {
-                        console.error('Update of ' + JSON.stringify(record) + ' failed! ' + data.error);
+                        console.error('Update of ' + JSON.stringify(record) + ' failed! ' + JSON.stringify(data.error));
                     }
                 }.bind(this),
                 error: function (xhr, status, err) {
@@ -96,7 +96,7 @@
                     }
                 }.bind(this),
                 error: function (xhr, status, err) {
-                    console.error('Deletion of ' + id + ' failed! ' + data.error);
+                    console.error('Deletion of ' + id + ' failed! ' + JSON.stringify(data.error));
                 }
             });
         };
@@ -154,10 +154,11 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.message === 'success') {
+                            console.log(JSON.stringify(data));
                             if (data.data !== '')
                                 this.updateView(viewName, data.data);
                         } else {
-                            console.error('Execution of ' + commandStr + ' failed! ' + data.error);
+                            console.error('Execution of ' + commandStr + ' failed! ' + JSON.stringify(data.error));
                         }
                     }.bind(this),
                     error: function (xhr, status, err) {
@@ -176,7 +177,7 @@
                     if (data.message === 'success') {
                         this.updateView(viewName, data.data);
                     } else {
-                        console.error('List of ' + path + ' failed! ' + data.error);
+                        console.error('List of ' + path + ' failed! ' + JSON.stringify(data.error));
                     }
                 }.bind(this),
                 error: function (xhr, status, err) {
