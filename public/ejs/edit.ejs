@@ -1,0 +1,30 @@
+<form class="form-horizontal" action="">
+    <input id="field-id" type='hidden' value="<%= data._id %>"/>
+    <div class='form-group'>
+        <label class='col-sm-2 control-label'> Name </label>
+        <div class='col-sm-10'>
+            <input id="field-name" class='form-control' type="text" placeholder="Name" value="<%= data.name %>"/>
+        </div>
+    </div>
+    <div class='form-group'>
+        <label class='col-sm-2 control-label'> Command </label>
+        <div class='col-sm-10'>
+            <input id="field-command" class='form-control' type="text" placeholder="command" value="<%= data.command %>"/>
+        </div>
+    </div>
+    <div class='form-group'>
+        <div class='col-sm-offset-2 col-sm-10'>
+            <button class='btn btn-default' onclick="m$.listRecords('commands','home')" type='button'>
+                Cancel
+            </button>
+            <span> &nbsp; &nbsp; </span>
+            <button class='btn btn-default' onclick="m$.createOrSaveRecord('commands', 'home', {_id: $('#field-id').val(), name: $('#field-name').val(), command: $('#field-command').val()})" type="button">
+                Save
+            </button>
+            <span> &nbsp; &nbsp; </span>
+            <button class='btn btn-default' onclick="$('#field-command').val(m$.expandCommand($('#field-command').val())); $('#field-name').val(m$.expandCommand($('#field-name').val()));" type="button">
+                Expand
+            </button>
+        </div>
+    </div>
+</form>

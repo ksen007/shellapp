@@ -1,0 +1,47 @@
+extends ../views/layout
+
+block content
+    div(data-role='page')
+        div(data-role='header', data-position='fixed', data-add-back-btn="true")
+            h1 #{pwd}
+        div(data-role='content')
+            - var id = Date.now()
+                form
+                    ul(data-role='listview', data-inset='true', id='id#{id}')
+                        for stat, name in folders
+                            li(data-sort-name='#{name}', data-sort-size='#{stat.size}', data-sort-creation='#{stat.birthtime.getTime()}')
+                                if stat.isDirectory()
+                                    a(href="#{stat.url}")
+                                        div
+                                            label(style="padding-top: 16px; padding-right: 8px; margin-left: -16px; margin-bottom: -16px; border: none; float: left;" )
+                                                input.f-selected(type='checkbox',name='#{name}')
+                                            div.ui-btn.ui-btn-icon-left.ui-icon-folder(style='padding: 0px 0px 0px 40px !important; margin: -20px 0px -14px -20px !important; text-align: left;')
+                                                p #{name}
+                                else
+                                    a(href="#{stat.url}")
+                                        div
+                                            label(style="padding-top: 16px; padding-right: 8px; margin-left: -16px; margin-bottom: -16px; border: none; float: left;" )
+                                                input.f-selected(type='checkbox',name='#{name}')
+                                            div.ui-btn.ui-btn-icon-left.ui-icon-file(style='padding: 0px 0px 0px 40px !important; margin: -20px 0px -14px -20px !important; text-align: left;')
+                                                p #{name}
+                                p.ui-li-aside #{stat.sizeStr}
+        div(data-role='footer', data-position='fixed')
+            table(style="width:100%;", border=0)
+                tbody
+                    tr
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/fast-backward.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/step-backward.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/play.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/pause.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/step-forward.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/fast-forward.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/volume-down.png', width="12", height="12")
+                        td(style="text-align: center;"): img.ui-btn.ui-corner-all(src='/jquery.mobile-1.4.5/images/icons-png/volume-up.png', width="12", height="12")
+        script.
+            setTimeout(function(){$('#id#{id}').jqmts({
+                useNativeMenu: true,
+                showCounts: false,
+                className: 'class#{id}',
+                attributes: {name: 'Sort by Name', creation: 'Sort by Creation Time', size: 'Sort by Size'}
+            })}, 0);
+

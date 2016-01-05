@@ -1,0 +1,26 @@
+body {
+    padding-top: 36px;
+    /* Margin bottom by footer height */
+    padding-bottom: 36px;
+}
+
+.overflow {
+    position:absolute;
+    top: 20px;
+    right: 10px;
+    display: block;
+    text-overflow: ellipsis;
+    direction: rtl;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 0;
+    color:#ccc;
+    max-width:75%;
+    text-align: right;
+}
+
+a {
+    color: #00B7FF;
+}
+
+

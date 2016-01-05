@@ -1,0 +1,37 @@
+extends ../views/layout
+
+block content
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+            a.btn.btn-default.navbar-btn.navbar-left(href="#{parent}")
+                span.glyphicon.glyphicon-arrow-up
+                | Up
+            b.navbar-text.overflow #{pwd}
+    .container-fluid
+        - var id = Date.now()
+            div
+                p &nbsp;
+            div.list-group(id='id#{id}')
+                for stat, name in folders
+                    a.list-group-item(href="#{stat.url}", data-sort-name='#{name}', data-sort-size='#{stat.size}', data-sort-creation='#{stat.birthtime.getTime()}')
+                        input.f-selected(type='checkbox',name='#{name}')
+                        span &nbsp; &nbsp; &nbsp;
+                        if stat.isDirectory()
+                            span.glyphicon.glyphicon-folder-open
+                        else
+                            span.glyphicon.glyphicon-file
+                        span &nbsp; #{name}
+    div.navbar.navbar-default.navbar-fixed-bottom
+        .container-fluid
+            a.btn.btn-default.navbar-btn(href="/home/")
+                span.glyphicon.glyphicon-home
+                | Home
+
+    script.
+        setTimeout(function(){$('#id#{id}').jqmts({
+            useNativeMenu: true,
+            showCounts: false,
+            className: 'class#{id}',
+            attributes: {name: 'Sort by Name', creation: 'Sort by Creation Time', size: 'Sort by Size'}
+        })}, 0);
+

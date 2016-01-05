@@ -1,0 +1,49 @@
+<div>
+    <div class="nav navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <a class="btn btn-default navbar-btn navbar-left" href="#"
+               onclick="m$.listFolder('finder','<%= data.parent %>')">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+                UP
+            </a>
+            <% m$.data.pwd = data.pwd; %>
+            <b class="navbar-text overflow">
+                <%= data.pwd %>
+            </b>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div>
+            <p> &nbsp; </p>
+        </div>
+        <% var id = m$.data.sortId = Date.now(); %>
+        <div class="list-group" id="id<%= id %>">
+            <% Object.keys(data.folders).map(function (key) { %>
+            <% var record = data.folders[key]; %>
+            <div class="list-group-item m-sortable" data-sort-name="<%= key %>" data-sort-size="<%= record.size %>"
+                 data-sort-creation="<%= new Date(record.birthtime).getTime() %>">
+                <input class="f-selected m-selected" type='checkbox' name="<%= record.url %>"/>
+                <span> &nbsp; &nbsp; &nbsp; </span>
+                <% if (record.isDir) { %>
+                <span class="glyphicon glyphicon-folder-open"></span>
+                <span onclick="m$.listFolder('finder','<%= record.url %>')">&nbsp; <%= key %></span>
+                <% } else { %>
+                <span class="glyphicon glyphicon-file"></span>
+                <span onclick="m$.listRecords('commands', 'home'); m$.executeCommand('shell','open <%= record.url %>')">&nbsp; <%= key %></span>
+                <% } %>
+            </div>
+            <% }); %>
+
+        </div>
+    </div>
+    <div class="nav navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+            <button class="btn btn-default navbar-btn navbar-left" onclick="m$.copyAndListRecords()">
+                <span class="glyphicon glyphicon-copy"></span>
+                Copy and Home
+            </button>
+        </div>
+    </div>
+</div>
+<img src="empty.gif" style="display: none;" onerror="m$.addSortingControls(m$.data.sortId);"/>

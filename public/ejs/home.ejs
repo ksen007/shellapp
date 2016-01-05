@@ -1,0 +1,42 @@
+<div class="nav navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <button class="btn btn-default navbar-btn navbar-left" onclick="m$.updateView('edit',{_id:'', name:'', command:''})">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add
+        </button>
+        <button class="btn btn-default navbar-btn navbar-left" onClick="m$.listRecords('commands','home')">
+            <span class="glyphicon glyphicon-refresh"></span>
+            Refresh
+        </button>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div>
+        <p> &nbsp; </p>
+    </div>
+    <div class="list-group">
+        <% Object.keys(data.records).map(function (key) { %>
+        <% var record = data.records[key]; %>
+        <% m$.data.records = data.records; %>
+        <div class="list-group-item">
+            <span onclick="m$.executeCommand('shell', m$.data.records[<%= record._id %>].command)"> <%= record.name %> </span>
+            <span class="glyphicon glyphicon-trash pull-right" onclick="m$.deleteRecord('commands','home', <%= record._id %>)"></span>
+            <span class="glyphicon glyphicon-edit pull-right" style="margin-right: 10px;" onclick="m$.updateView('edit',m$.data.records[<%= record._id %>])"></span>
+        </div>
+        <% }); %>
+
+    </div>
+</div>
+
+<!--
+<div class="nav navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <button class="btn btn-default navbar-btn navbar-left">
+            <span class="glyphicon glyphicon-home"></span>
+            Home
+        </button>
+    </div>
+</div>
+-->
+

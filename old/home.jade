@@ -1,0 +1,37 @@
+extends ../views/layout
+block content
+    script(type='text/javascript' src='/javascripts/home.js')
+    nav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+            button#crud-add.btn.btn-default.navbar-btn.navbar-left
+                span.glyphicon.glyphicon-plus
+                | Add
+            button#crud-refresh.btn.btn-default.navbar-btn.navbar-left
+                span.glyphicon.glyphicon-refresh
+                | Refresh
+    .container-fluid
+        div
+            p &nbsp;
+        div#crud-listall.list-group
+        div#crud-edit.list-group(style='display: none;')
+            form.form-horizontal
+                input#field-id(type='hidden')
+                .form-group
+                    label.col-sm-2.control-label(for="command-name") Name
+                    .col-sm-10
+                        input#field-name.form-control(type="text",placeholder="Name")
+                .form-group
+                    label.col-sm-2.control-label(for="command-desc") Command
+                    .col-sm-10
+                        input#field-command.form-control(type="text",placeholder="command")
+                .form-group
+                    .col-sm-offset-2.col-sm-10
+                        button#button-cancel.btn.btn-default(type="submit") Cancel
+                        span &nbsp; &nbsp;
+                        button#button-save.btn.btn-default(type="submit") Save
+    div.navbar.navbar-default.navbar-fixed-bottom
+        .container-fluid
+            button#crud-home.btn.btn-default.navbar-btn
+                span.glyphicon.glyphicon-home
+                | Home
+
