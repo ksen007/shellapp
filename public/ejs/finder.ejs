@@ -38,14 +38,14 @@
             <% Object.keys(data.folders).map(function (key) { %>
             <% var record = data.folders[key]; %>
             <a class="list-group-item m-sortable" href="#" data-sort-name="<%= key %>" data-sort-size="<%= record.size %>"
-                 data-sort-creation="<%= new Date(record.birthtime).getTime() %>" data-sort-random="<%= Math.floor((Math.random() * 10000) + 1); %>">
+                 data-sort-creation="<%= new Date(record.birthtime).getTime() %>" data-sort-random="<%= Math.floor((Math.random() * 10000) + 1) %>">
                         <input class="f-selected m-selected pull-left" style="margin-right: 20px;" type='checkbox' name="<%= record.url %>"/>
                 <% if (record.isDir) { %>
                 <div class="pull-left form-control-inline" onclick="m$.listFolder('finder','<%= record.url %>')">
                     <span class="glyphicon glyphicon-folder-open" style="margin-right: 10px;"></span><%= key %>
                 </div>
                 <% } else { %>
-                <div class="pull-left form-control-inline" onclick="m$.listRecords('commands', 'home'); m$.executeCommand('shell','open <%= record.url %>')">
+                <div class="pull-left form-control-inline" onclick="m$.listRecords('commands', 'home'); m$.executeDefault('shell', '<%= record.url %>')">
                     <span class="glyphicon glyphicon-file" style="margin-right: 10px;"></span><%= key %>
                 </div>
                 <% } %>

@@ -212,6 +212,19 @@
             }
         };
 
+        this.executeDefault = function (viewName, file) {
+            var id;
+            if (m$.data.records) {
+                for (id in m$.data.records) {
+                    break;
+                }
+            }
+            if (id!==null) {
+                m$.data.checked = [file];
+                this.executeCommand(viewName, m$.data.records[id].command);
+            }
+        };
+
         this.listFolder = function (viewName, path) {
             $.ajax({
                 url: '/list/' + path,
