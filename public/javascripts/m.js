@@ -169,14 +169,14 @@
             }
             if (/\$all/.test(commandStr)) {
                 if (checkedFiles && checkedFiles.length > 0) {
-                    allFiles = '"' + checkedFiles.join('" "') + '"';
+                    allFiles = checkedFiles.join(' ');
                 }
                 commandStr = commandStr.replace(/\$all/g, allFiles);
             }
             var tmp = "";
             if (/\$each/.test(commandStr)) {
                 for (i = 0; i < checkedFiles.length; i++) {
-                    tmp = tmp + commandStr.replace(/\$each/g, '"' + checkedFiles[i] + '"') + ';';
+                    tmp = tmp + commandStr.replace(/\$each/g, checkedFiles[i]) + ';';
                 }
                 commandStr = tmp;
             }
@@ -247,16 +247,32 @@
             );
         };
 
-        this.addSortingControls = function (id) {
-            setTimeout(function () {
-                $('#id' + id).jqmts({
-                    useNativeMenu: false,
-                    showCounts: false,
-                    className: 'class' + id,
-                    attributes: {name: 'Sort by Name', creation: 'Sort by Creation Time', size: 'Sort by Size'}
-                })
-            }, 0);
+        function getOrder(str) {
+            if (str.indexOf('desc')===0) {
+                return 'desc';
+            } else {
+                return 'asc';
+            }
+        }
+
+        function getData(str) {
+            if (str.indexOf('desc')===0) {
+                return str.substring(4);
+            } else if (str.indexOf('asc')===0) {
+                return str.substring(3);
+            } else {
+                return str;
+            }
+        }
+
+        this.handleSortingEvent = function(e, id) {
+            var val = e.options[e.selectedIndex].value;
+            $('#id'+id+' .m-sortable').tsort({data: 'sort-' + getData(val), order: getOrder(val)});
         };
+
+        this.sortInitial = function(id) {
+            $('#id'+id+' .m-sortable').tsort({data: 'sort-name', order: 'asc'});
+        }
     }
 
     m$ = new C();

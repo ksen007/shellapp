@@ -15,15 +15,22 @@
     <div>
         <p> &nbsp; </p>
     </div>
-    <div class="list-group">
+    <div class="list-group sortable">
         <% Object.keys(data.records).map(function (key) { %>
         <% var record = data.records[key]; %>
         <% m$.data.records = data.records; %>
-        <div class="list-group-item">
-            <span onclick="m$.executeCommand('shell', m$.data.records[<%= record._id %>].command)"> <%= record.name %> </span>
-            <span class="glyphicon glyphicon-trash pull-right" onclick="m$.deleteRecord('commands','home', <%= record._id %>)"></span>
-            <span class="glyphicon glyphicon-edit pull-right" style="margin-right: 10px;" onclick="m$.updateView('edit',m$.data.records[<%= record._id %>])"></span>
-        </div>
+        <a class="list-group-item" href="#" >
+            <div class="pull-left" onclick="m$.executeCommand('shell', m$.data.records[<%= record._id %>].command)">
+                <%= record.name %>
+            </div>
+            <div class="pull-right"  onclick="m$.deleteRecord('commands','home', <%= record._id %>)">
+                <span class="glyphicon glyphicon-trash"></span>
+            </div>
+            <div class="pull-right" style="margin-right: 10px;" onclick="m$.updateView('edit',m$.data.records[<%= record._id %>])">
+                <span class="glyphicon glyphicon-edit"></span>
+            </div>
+            <div class="clearfix"></div>
+        </a>
         <% }); %>
 
     </div>

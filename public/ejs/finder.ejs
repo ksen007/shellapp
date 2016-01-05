@@ -10,6 +10,7 @@
             <b class="navbar-text overflow">
                 <%= data.pwd %>
             </b>
+            <div class="clearfix"></div>
         </div>
     </div>
 
@@ -19,20 +20,37 @@
         </div>
         <% var id = m$.data.sortId = Date.now(); %>
         <div class="list-group" id="id<%= id %>">
+            <div class="list-group-item form-inline">
+                <div class="form-group">
+                    <input id="m-select-all" type="checkbox" onclick="m$.toggleSelectAll();"/>
+                    <span> &nbsp; &nbsp; &nbsp;</span>
+                    <select class="form-control" onchange="m$.handleSortingEvent(this, <%= id %>)">
+                        <option value="ascname">Sort by Name (Ascending)</option>
+                        <option value="descname">Sort by Name (Descending)</option>
+                        <option value="asccreation">Sort by Creation Time (Ascending)</option>
+                        <option value="desccreation">Sort by Creation Time (Descending)</option>
+                        <option value="ascsize">Sort by Size (Ascending)</option>
+                        <option value="descsize">Sort by Size (Descending)</option>
+                        <option value="ascrandom">Random</option>
+                    </select>
+                </div>
+            </div>
             <% Object.keys(data.folders).map(function (key) { %>
             <% var record = data.folders[key]; %>
-            <div class="list-group-item m-sortable" data-sort-name="<%= key %>" data-sort-size="<%= record.size %>"
-                 data-sort-creation="<%= new Date(record.birthtime).getTime() %>">
-                <input class="f-selected m-selected" type='checkbox' name="<%= record.url %>"/>
-                <span> &nbsp; &nbsp; &nbsp; </span>
+            <a class="list-group-item m-sortable" href="#" data-sort-name="<%= key %>" data-sort-size="<%= record.size %>"
+                 data-sort-creation="<%= new Date(record.birthtime).getTime() %>" data-sort-random="<%= Math.floor((Math.random() * 10000) + 1); %>">
+                        <input class="f-selected m-selected pull-left" style="margin-right: 20px;" type='checkbox' name="<%= record.url %>"/>
                 <% if (record.isDir) { %>
-                <span class="glyphicon glyphicon-folder-open"></span>
-                <span onclick="m$.listFolder('finder','<%= record.url %>')">&nbsp; <%= key %></span>
+                <div class="pull-left form-control-inline" onclick="m$.listFolder('finder','<%= record.url %>')">
+                    <span class="glyphicon glyphicon-folder-open" style="margin-right: 10px;"></span><%= key %>
+                </div>
                 <% } else { %>
-                <span class="glyphicon glyphicon-file"></span>
-                <span onclick="m$.listRecords('commands', 'home'); m$.executeCommand('shell','open <%= record.url %>')">&nbsp; <%= key %></span>
+                <div class="pull-left form-control-inline" onclick="m$.listRecords('commands', 'home'); m$.executeCommand('shell','open <%= record.url %>')">
+                    <span class="glyphicon glyphicon-file" style="margin-right: 10px;"></span><%= key %>
+                </div>
                 <% } %>
-            </div>
+                <div class="clearfix"></div>
+            </a>
             <% }); %>
 
         </div>
@@ -46,4 +64,4 @@
         </div>
     </div>
 </div>
-<img src="empty.gif" style="display: none;" onerror="m$.addSortingControls(m$.data.sortId);"/>
+<img src="empty.gif" style="display: none;" onerror="m$.sortInitial(m$.data.sortId);"/>
