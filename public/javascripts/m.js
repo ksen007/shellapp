@@ -216,6 +216,7 @@
 
     m$ = new C();
     m$.data = {};
+    m$.data.checked = [];
 }());
 
 $(function () {
