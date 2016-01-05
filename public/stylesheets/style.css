@@ -19,6 +19,13 @@ body {
     text-align: right;
 }
 
+#loading-indicator {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+}
+
 a {
     color: #00B7FF;
 }
