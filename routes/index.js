@@ -66,7 +66,7 @@ router.post('/shell/', function (req, res, next) {
         if (cmd.indexOf('async ') === 0) {
             cmd = cmd.substring(cmd.indexOf(' '));
             shelljs.exec(cmd, {async: true});
-            res.json({message: 'success', data: "Running process asynchronously", code: 0});
+            res.json({message: 'success', data: "", code: 0});
         } else {
             var out = shelljs.exec(cmd);
             res.json({message: 'success', data: out.output, code: out.code});

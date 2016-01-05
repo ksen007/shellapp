@@ -63,6 +63,7 @@
             ;
 		// insert it
 		$el.prepend( $select ).trigger('create');
+        $('.m-sortable',$el).tsort({data: 'sort-name', order: 'asc'});
 	},
 	compileKeys = function($el, options) {
 		var $list = $('li:not(.' + options.className + ')',$el);
