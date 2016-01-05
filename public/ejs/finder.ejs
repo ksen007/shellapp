@@ -45,7 +45,7 @@
                     <span class="glyphicon glyphicon-folder-open" style="margin-right: 10px;"></span><%= key %>
                 </div>
                 <% } else { %>
-                <div class="pull-left form-control-inline" onclick="m$.listRecords('commands', 'home'); m$.executeDefault('shell', '<%= record.url %>')">
+                <div class="pull-left form-control-inline" onclick="m$.copyFileAndListRecords('<%= record.url %>')">
                     <span class="glyphicon glyphicon-file" style="margin-right: 10px;"></span><%= key %>
                 </div>
                 <% } %>
@@ -58,8 +58,12 @@
     <div class="nav navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
             <button class="btn btn-default navbar-btn navbar-left" onclick="m$.copyAndListRecords()">
-                <span class="glyphicon glyphicon-copy"></span>
-                Copy and Home
+                <span class="glyphicon glyphicon-check"></span>
+                Select
+            </button>
+            <button class="btn btn-default navbar-btn navbar-left" onclick="m$.listRecords('commands', 'home')">
+                <span class="glyphicon glyphicon-remove"></span>
+                Cancel
             </button>
         </div>
     </div>

@@ -212,19 +212,6 @@
             }
         };
 
-        this.executeDefault = function (viewName, file) {
-            var id;
-            if (m$.data.records) {
-                for (id in m$.data.records) {
-                    break;
-                }
-            }
-            if (id!==null) {
-                m$.data.checked = [file];
-                this.executeCommand(viewName, m$.data.records[id].command);
-            }
-        };
-
         this.listFolder = function (viewName, path) {
             $.ajax({
                 url: '/list/' + path,
@@ -241,6 +228,11 @@
                     console.error('List of ' + path + ' failed! ', status, err.toString());
                 }
             });
+        };
+
+        this.copyFileAndListRecords = function (file) {
+            m$.data.checked = [file];
+            this.listRecords('commands', 'home');
         };
 
         this.copyAndListRecords = function () {
