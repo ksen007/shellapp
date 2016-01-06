@@ -185,7 +185,7 @@
 
         this.executeCommand = function (viewName, commandStr, postFun) {
             console.log(postFun);
-            if (commandStr.indexOf('m-open') === 0) {
+            if (commandStr.indexOf('m-list') === 0) {
                 commandStr = this.expandCommand(commandStr, false);
                 this.listFolder('finder', commandStr.substring(commandStr.indexOf(' ')).trim());
             } else {

@@ -63,8 +63,8 @@ router.get(/^\/list\/(.*)/, function (req, res, next) {
 router.post('/shell/', function (req, res, next) {
     try {
         var cmd = req.body.command;
-        if (cmd.indexOf('async ') === 0) {
-            cmd = cmd.substring(cmd.indexOf(' '));
+        if (cmd.indexOf('m-async ') === 0) {
+            cmd = cmd.substring(cmd.indexOf(' ')+1);
             shelljs.exec(cmd, {async: true});
             res.json({message: 'success', data: "", code: 0});
         } else {
