@@ -1,6 +1,6 @@
 <div class="nav navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <button class="btn btn-default navbar-btn navbar-left" onclick="m$.updateView('edit',{_id:'', name:'', command:''})">
+        <button class="btn btn-default navbar-btn navbar-left" onclick="m$.updateView('edit',{_id:'', name:'', command:'', rank: '0', post: 'function(str){return \'<pre>\'+str+\'</pre>\'; }'})">
             <span class="glyphicon glyphicon-plus"></span>
             Add
         </button>
@@ -15,12 +15,12 @@
     <div>
         <p> &nbsp; </p>
     </div>
-    <div class="list-group sortable">
+    <div id="idm-commands" class="list-group sortable">
         <% Object.keys(data.records).map(function (key) { %>
         <% var record = data.records[key]; %>
         <% m$.data.records = data.records; %>
-        <a class="list-group-item" href="#" >
-            <div class="pull-left" onclick="m$.executeCommand('shell', m$.data.records[<%= record._id %>].command)">
+        <a class="list-group-item m-sortable" href="#"  data-sort-rank="<%= record.rank %>">
+            <div class="pull-left" onclick="m$.executeCommand('shell', m$.data.records[<%= record._id %>].command, m$.data.records[<%= record._id %>].post)">
                 <%= record.name %>
             </div>
             <div class="pull-right"  onclick="m$.deleteRecord('commands','home', <%= record._id %>)">
@@ -44,3 +44,4 @@
     </div>
 </div>
 
+<img src="/images/ajax-loader.gif" style="display: none;" onload="m$.sortInitial('m-commands', 'rank');"/>

@@ -76,7 +76,7 @@ router.post('/shell/', function (req, res, next) {
     }
 });
 
-crud(router, 'commands', {"name": 'string', "command": 'string'});
+crud(router, 'commands', {"name": 'string', "command": 'string', rank: 'string', post: 'string'});
 
 
 module.exports = router;

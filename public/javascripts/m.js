@@ -183,7 +183,8 @@
             return commandStr;
         };
 
-        this.executeCommand = function (viewName, commandStr) {
+        this.executeCommand = function (viewName, commandStr, postFun) {
+            console.log(postFun);
             if (commandStr.indexOf('m-open') === 0) {
                 commandStr = this.expandCommand(commandStr, false);
                 this.listFolder('finder', commandStr.substring(commandStr.indexOf(' ')).trim());
@@ -200,7 +201,7 @@
                         if (data.message === 'success') {
                             console.log(JSON.stringify(data));
                             if (data.data !== '')
-                                this.updateView(viewName, data.data);
+                                this.updateView(viewName, (typeof postFun === 'string')?eval('('+postFun+')').call(this, data.data): data.data);
                         } else {
                             console.error('Execution of ' + commandStr + ' failed! ' + JSON.stringify(data.error));
                         }
@@ -275,8 +276,8 @@
             $('#id'+id+' .m-sortable').tsort({data: 'sort-' + getData(val), order: getOrder(val)});
         };
 
-        this.sortInitial = function(id) {
-            $('#id'+id+' .m-sortable').tsort({data: 'sort-name', order: 'asc'});
+        this.sortInitial = function(id, name) {
+            $('#id'+id+' .m-sortable').tsort({data: 'sort-'+name, order: 'asc'});
         }
     }
 
