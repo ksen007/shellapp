@@ -165,18 +165,18 @@
             }
 
             if (/\$pwd/.test(commandStr)) {
-                commandStr = commandStr.replace(/\$pwd/g, m$.data.pwd);
+                commandStr = commandStr.replace(/\$pwd/g, '"'+m$.data.pwd+'"');
             }
             if (/\$all/.test(commandStr)) {
                 if (checkedFiles && checkedFiles.length > 0) {
-                    allFiles = checkedFiles.join(' ');
+                    allFiles = '"'+checkedFiles.join('" "') + '"';
                 }
                 commandStr = commandStr.replace(/\$all/g, allFiles);
             }
             var tmp = "";
             if (/\$each/.test(commandStr)) {
                 for (i = 0; i < checkedFiles.length; i++) {
-                    tmp = tmp + commandStr.replace(/\$each/g, checkedFiles[i]) + ';';
+                    tmp = tmp + '"'+commandStr.replace(/\$each/g, checkedFiles[i]) + '";';
                 }
                 commandStr = tmp;
             }
@@ -187,7 +187,11 @@
             console.log(postFun);
             if (commandStr.indexOf('m-list') === 0) {
                 commandStr = this.expandCommand(commandStr, false);
-                this.listFolder('finder', commandStr.substring(commandStr.indexOf(' ')).trim());
+                var p = commandStr.substring(commandStr.indexOf(' ')).trim();
+                if (p.indexOf('"')===0 && p.endsWith('"')) {
+                    p = p.substring(1,p.length-1);
+                }
+                this.listFolder('finder', p);
             } else {
                 commandStr = this.expandCommand(commandStr, true);
                 console.log(commandStr);
