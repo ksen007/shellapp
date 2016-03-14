@@ -22,6 +22,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+STATIC_PATH = path.join(__dirname, '..');
+
+app.use('/kms', express.static(path.join(STATIC_PATH, 'kms')));
+
+
+
 app.use('/', routes);
 //app.use('/users', users);
 
